@@ -1,8 +1,8 @@
 import type { NextPage } from 'next'
 import { Fragment } from 'react';
 
-const carDetail  = ({props})=> {
-    console.log(props)
+const carDetail  = ({foods}: any)=> {
+    console.log(foods)
     return (
     <Fragment>
         <section>
@@ -17,7 +17,8 @@ const carDetail  = ({props})=> {
 }
 
 export async function getServerSideProps(context) {
-    const res = await fetch("http://localhost:3000/api")
+  let searchTerm = context.query.term
+    const res = await fetch(`https://api.nal.usda.gov/fdc/v1/foods/search?query=${searchTerm}&api_key=${process.env.API_KEY}`)
     const data = await res.json()
   
     if (!data) {
@@ -27,7 +28,7 @@ export async function getServerSideProps(context) {
     }
   
     return {
-      props: { data }, // will be passed to the page component as props
+      props: { foods : data.foods }, // will be passed to the page component as props
     }
   }
 

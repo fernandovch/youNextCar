@@ -74,7 +74,7 @@ const CarType = ({ props }: IPropsCar) => {
   );
 };
 
-CarType.getInitialProps = async (ctx) => {
+export async function getServerSideProps(context) {
   
     let headers = new Headers({
       "Access-Control-Allow-Origin": "http://fake-vehicles-api.herokuapp.com",
